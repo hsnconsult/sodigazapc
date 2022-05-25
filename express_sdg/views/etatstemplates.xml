@@ -1,8 +1,8 @@
 <odoo>
     <data>
 <!-- import css -->
-<template id="express_sdgtemplate_id" name="express_sdgtemplate_name" inherit_id="web.report_assets_common">
-  <xpath expr="." position="inside">
+<template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+  <xpath expr="//head" position="inside">
     <link rel="stylesheet" type="text/css" href="/express_sdg/static/src/css/express_sdg.css" />
   </xpath>
 </template>
