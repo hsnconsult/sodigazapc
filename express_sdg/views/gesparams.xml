@@ -254,15 +254,15 @@
     <!-- END pricechange-->
     <!-- debut MENUS-->
         <menuitem id="express_sdg_etats_module" name="Etats Express" sequence="300" />
-        <menuitem id="express_sdg_etats" name="Etats" parent="express_sdg_etats_module" />
-        <menuitem id="express_sdg_etats1" name="Etat des encaissements" parent="express_sdg_etats" action="express_sdg.moyenpaiement_wizard"/>
-        <menuitem id="express_sdg_etats2" name="Etat des stocks" parent="express_sdg_etats" action="express_sdg.stocks_wizard"/>
-        <menuitem id="express_sdg_etats3" name="Etat des ventespos" parent="express_sdg_etats" action="express_sdg.ventespos_wizard"/>
-        <menuitem id="express_sdg_etats4" name="Etat des lotsperemption" parent="express_sdg_etats" action="express_sdg.peremption_wizard"/>
+        <menuitem id="express_sdg_etats" name="Etats" parent="express_sdg_etats_module" sequence="10"/>
+        <menuitem id="express_sdg_etats1" name="Etat des encaissements" parent="express_sdg_etats" action="express_sdg.moyenpaiement_wizard" sequence="10"/>
+        <menuitem id="express_sdg_etats2" name="Etat des stocks" parent="express_sdg_etats" action="express_sdg.stocks_wizard" sequence="20"/>
+        <menuitem id="express_sdg_etats3" name="Etat des ventespos" parent="express_sdg_etats" action="express_sdg.ventespos_wizard" sequence="30"/>
+        <menuitem id="express_sdg_etats4" name="Etat des lotsperemption" parent="express_sdg_etats" action="express_sdg.peremption_wizard" sequence="40"/>
 
-    <menuitem id="express_sdg_root" name="Paramétrages" parent="stock.menu_stock_root" groups="stock.group_stock_manager" />
-    <menuitem id="express_sdg_rayon" name="Rayons" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.rayon_action_window"/>
-    <menuitem id="express_sdg_famille" name="Familles" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.famille_action_window" />
+    <menuitem id="express_sdg_root" name="Paramétrages" parent="stock.menu_stock_root" groups="stock.group_stock_manager"  sequence="200"/>
+    <menuitem id="express_sdg_rayon" name="Rayons" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.rayon_action_window" sequence="10"/>
+    <menuitem id="express_sdg_famille" name="Familles" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.famille_action_window" sequence="20" />
     <!-- fin MENUS-->
     
   </data>
