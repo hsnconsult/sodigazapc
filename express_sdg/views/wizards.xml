@@ -1,0 +1,157 @@
+<odoo>
+    <data>
+        <!-- etat moyenpaiement -->
+        <record id="moyenpaiement_form" model="ir.ui.view">
+            <field name="name">express_sdg.moyenpaiement.form</field>
+            <field name="model">express_sdg.moyenpaiement</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                        <field name="date_debut"/>
+                        <field name="point_vente" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                    </group>
+                    <group>
+                        <field name="date_fin"/>
+                    </group>
+                </group>
+                    <footer>
+                        <button name="action_done_moyenpaiement" type="object" string="Confirmer" class="oe_highlight"/>
+                        <button name="action_done_moyenpaiementxlsx" type="object" string="Excel(xlsx)" class="oe_highlight"/>
+                        <button string="Annuler" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="moyenpaiement_wizard" model="ir.actions.act_window">
+            <field name="name">Etat moyenpaiement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">express_sdg.moyenpaiement</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="express_sdg.moyenpaiement_form"/>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- etat stocks -->
+        <record id="stocks_form" model="ir.ui.view">
+            <field name="name">express_sdg.stocks.form</field>
+            <field name="model">express_sdg.stocks</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                        <field name="date_debut"/>
+                    </group>
+                    <group>
+                        <field name="date_fin"/>
+                    </group>
+                    <group>
+                        <field name="entrepot"/>
+                        <field name="rayon" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="famille"/>
+                        <field name="categorie_article"/>
+                        <field name="produit" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="ouivoir" groups="stock.group_stock_manager"/>
+                    </group>
+                </group>
+                    <footer>
+                        <button name="action_done_stocks" type="object" string="Confirmer" class="oe_highlight"/>
+                        <button name="action_done_stocksxlsx" type="object" string="Excel(xlsx)" class="oe_highlight"/>
+                        <button string="Annuler" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="stocks_wizard" model="ir.actions.act_window">
+            <field name="name">Etat stocks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">express_sdg.stocks</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="express_sdg.stocks_form"/>
+            <field name="target">new</field>
+        </record>
+
+         <!-- etat ventespos -->
+         <record id="ventespos_form" model="ir.ui.view">
+            <field name="name">express_sdg.ventespos.form</field>
+            <field name="model">express_sdg.ventespos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                        <field name="date_debut"/>
+                    </group>
+                    <group>
+                        <field name="date_fin"/>
+                    </group>
+                    <group>
+                        <field name="caissiere"/>
+                        <field name="rayon" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="famille"/>
+                        <field name="categorie_article"/>
+                        <field name="produitv" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="point_vente" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                    </group>
+                </group>
+                    <footer>
+                        <button name="action_done_ventespos" type="object" string="Confirmer" class="oe_highlight"/>
+                        <button name="action_done_ventesposxlsx" type="object" string="Excel(xlsx)" class="oe_highlight"/>
+                        <button string="Annuler" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="ventespos_wizard" model="ir.actions.act_window">
+            <field name="name">Etat ventespos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">express_sdg.ventespos</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="express_sdg.ventespos_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <!-- etat peremption -->
+        <record id="peremption_form" model="ir.ui.view">
+            <field name="name">express_sdg.peremption.form</field>
+            <field name="model">express_sdg.peremption</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                        <field name="date_debut"/>
+                    </group>
+                    <group>
+                        <field name="date_fin"/>
+                    </group>
+                    <group>
+                        <field name="entrepot"/>
+                        <field name="rayon" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="famille"/>
+                        <field name="categorie_article"/>
+                        <field name="produit" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                        <field name="lot" widget="many2one_tags" options="{'no_create': True,'no_open': True}"/>
+                    </group>
+                </group>
+                    <footer>
+                        <button name="action_done_peremption" type="object" string="Confirmer" class="oe_highlight"/>
+                        <button name="action_done_peremptionxlsx" type="object" string="Excel(xlsx)" class="oe_highlight"/>
+                        <button string="Annuler" class="btn btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="peremption_wizard" model="ir.actions.act_window">
+            <field name="name">Etat peremption</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">express_sdg.peremption</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="express_sdg.peremption_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

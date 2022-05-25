@@ -1,0 +1,269 @@
+<odoo>
+  <data>
+     <!-- ajouter regime fiscal/tva -->
+     <record id="productemplate_tree_inherit" model="ir.ui.view">
+      <field name="name">productemplate tree Perso</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_tree_view"/>
+      <field name="arch" type="xml">
+        <field name="categ_id" position="replace"/> 
+          <field name="responsible_id" position="replace"/> 
+        <field name="list_price" position="after">
+          <field name="taxes_id" widget="many2many_tags"/> 
+        </field>
+        <field name="standard_price" position="after">
+          <field name="responsible_id"/> 
+        </field> 
+<field name="default_code" position="after">
+          <field name="idrayon"/>    
+          <field name="idfamille"/> 
+          <field name="categ_id"/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    </field>
+      </field>
+</record>
+    <!-- herite famille rayon -->
+    <record id="productemplate_form_inherit" model="ir.ui.view">
+      <field name="name">productemplate form Perso</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <field name="categ_id" position="before">
+          <field name="idrayon" widget="many2one_tags" options="{'no_create': True}" />
+          <field name="idfamille" widget="many2one_tags" options="{'no_create_edit': True}" />                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+    </field>
+
+                <xpath expr="//field[@name='use_expiration_date']" position="after">
+                  <field name="stock_minimal"/>
+                </xpath>
+
+      <page name="inventory" position="after">
+        <page string="Historique Prix d'achat" name="hispa"> 
+          <field name="order_ids" readonly="1"/>
+        </page>
+
+        <page string="Historique Prix de vente" name="hispv"> 
+          <field name="pc_ids" readonly="1"/>  
+  </page>
+      </page>
+      </field>
+</record>
+<!-- herite stockminimal -->
+<record id="productstockminimal_form_inherit" model="ir.ui.view">
+  <field name="name">productstockminimal form Perso</field>
+  <field name="model">product.category</field>
+  <field name="inherit_id" ref="product.product_category_form_view"/>
+  <field name="arch" type="xml">
+    <field name="parent_id" position="after">
+      <field name="stock_minimal" />
+</field>
+  </field>
+</record>
+<!-- filter stock minimal, stock inferieur à 0 -->
+<record id="protempsearch_stockmininf" model="ir.ui.view">
+  <field name="name">protempsearch stockmininf</field>
+  <field name="model">product.template</field>
+  <field name="inherit_id" ref="product.product_template_search_view"/>
+  <field name="arch" type="xml">
+      <xpath expr="//filter[@name='consumable']" position="after">
+          <separator/>
+          <filter string="Alerte Stock minimal" name="stockmin" domain="[('stock_minimaltmp', '=', True)]"/>
+          <filter string="Alerte Stock fini" name="stockfin" domain="[('qty_available', '&lt;=', 0)]"/>
+      </xpath>
+  </field>
+</record>
+<!-- filter stock perimé -->
+<record id="protempsearch_stockperime" model="ir.ui.view">
+  <field name="name">protempsearch stockperime</field>
+  <field name="model">stock.production.lot</field>
+  <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+  <field name="arch" type="xml">
+      <xpath expr="//filter[@name='expiration_alerts']" position="after">
+          <separator/>
+          <filter string="Alerte Stock perimé" name="stockmin" domain="[('expiration_date', '&lt;=', time.strftime('%Y-%m-%d %H:%M:%S')),
+          ('stocklot', '=', True)]"/>
+          <filter string="Alerte Stock perimé dans les 7 prochain jours" 
+              name="expiration_datef" 
+              domain="[('expiration_date','>=', ((context_today()).strftime('%Y-%m-%d'))), 
+              ('expiration_date','&lt;=', ((context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d')))
+              ,('stocklot', '=', True)]"/>
+
+          <filter string="Alerte Stock perimé dans les 10 prochain jours" 
+              name="expiration_datef" 
+              domain="[('expiration_date','>=', ((context_today()).strftime('%Y-%m-%d'))), 
+              ('expiration_date','&lt;=', ((context_today()+datetime.timedelta(days=10)).strftime('%Y-%m-%d')))
+              ,('stocklot', '=', True)]"/>
+
+          <filter string="Alerte Stock perimé dans les 20 prochain jours" 
+              name="expiration_datef" 
+              domain="[('expiration_date','>=', ((context_today()).strftime('%Y-%m-%d'))), 
+              ('expiration_date','&lt;=', ((context_today()+datetime.timedelta(days=20)).strftime('%Y-%m-%d')))
+              ,('stocklot', '=', True)]"/>
+
+          <filter string="Alerte Stock perimé dans les 30 prochain jours" 
+              name="expiration_datef" 
+              domain="[('expiration_date','>=', ((context_today()).strftime('%Y-%m-%d'))), 
+              ('expiration_date','&lt;=', ((context_today()+datetime.timedelta(days=30)).strftime('%Y-%m-%d')))
+              ,('stocklot', '=', True)]"/>
+
+              <filter string="Alerte Stock perimé dans les 60 prochain jours" 
+              name="expiration_datef60" 
+              domain="[('expiration_date','>=', ((context_today()).strftime('%Y-%m-%d'))), 
+              ('expiration_date','&lt;=', ((context_today()+datetime.timedelta(days=60)).strftime('%Y-%m-%d')))
+              ,('stocklot', '=', True)]"/>
+
+        </xpath>
+  </field>
+</record>
+<!-- BEGIN famille-->
+    <!-- debut famille tree view -->
+    <record model="ir.ui.view" id="famille_list_view">
+      <field name="name">liste famille</field>
+      <field name="model">express_sdg.famille</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description" />
+        </tree>
+      </field>
+    </record>
+    <!-- fin famille tree view -->
+    <!-- debut famille form view -->
+    <record id="famille_form_view" model="ir.ui.view">
+      <field name="name">famille form</field>
+      <field name="model">express_sdg.famille</field>
+      <field name="arch" type="xml">
+        <form string="famille form">
+  
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="name" />
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="description" placeholder="Description Famille!"/>
+
+              </group>
+            </group>
+            <notebook>
+              <page string="Articles dans la famille" name="artr"> 
+                <field name="famille_ids" readonly="1"/>
+              </page>
+          </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+    <!-- fin famille form view -->
+    <!-- debut famille action view -->
+    <record model="ir.actions.act_window" id="famille_action_window">
+      <field name="name">famille window</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">express_sdg.famille</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_smiling_face">Creez la premiere famille!</p>
+      </field>
+    </record>
+    <!--fin famille action view -->
+    <!-- END famille-->
+
+    <!-- BEGIN rayon-->
+    <!-- debut rayon tree view -->
+    <record model="ir.ui.view" id="rayon_list_view">
+      <field name="name">liste rayon</field>
+      <field name="model">express_sdg.rayon</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+        </tree>
+      </field>
+    </record>
+    <!-- fin rayon tree view -->
+    <!-- debut rayon form view -->
+    <record id="rayon_form_view" model="ir.ui.view">
+      <field name="name">rayon form</field>
+      <field name="model">express_sdg.rayon</field>
+      <field name="arch" type="xml">
+        <form string="rayon form">
+  
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="name" />
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="description" placeholder="Description Rayon!"/>
+
+              </group>
+            </group>
+            <notebook>
+              <page string="Articles dans le rayon" name="artr"> 
+                <field name="rayon_ids" readonly="1"/>
+              </page>
+          </notebook>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="activity_ids" widget="mail_activity"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+    <!-- fin rayon form view -->
+    <!-- debut rayon action view -->
+    <record model="ir.actions.act_window" id="rayon_action_window">
+      <field name="name">rayon window</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">express_sdg.rayon</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_smiling_face">Creez le premier rayon!</p>
+      </field>
+    </record>
+    <!--fin rayon action view -->
+    <!-- END rayon-->
+<!-- BEGIN pricechange-->
+    <!-- debut pricechange tree view -->
+    <record model="ir.ui.view" id="pricechange_list_view">
+      <field name="name">liste pricechange</field>
+      <field name="model">express_sdg.pricechange</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="id"/>
+          <field name="ptmplid"/>
+          <field name="user_id"/>
+          <field name="track_pvtmp"/>
+          <field name="datepc"/>
+        </tree>
+      </field>
+    </record>
+    <!-- fin pricechange tree view -->  
+    <!-- END pricechange-->
+    <!-- debut MENUS-->
+        <menuitem id="express_sdg_etats_module" name="Etats Express" sequence="300" />
+        <menuitem id="express_sdg_etats" name="Etats" parent="express_sdg_etats_module" />
+        <menuitem id="express_sdg_etats1" name="Etat des encaissements" parent="express_sdg_etats" action="express_sdg.moyenpaiement_wizard"/>
+        <menuitem id="express_sdg_etats2" name="Etat des stocks" parent="express_sdg_etats" action="express_sdg.stocks_wizard"/>
+        <menuitem id="express_sdg_etats3" name="Etat des ventespos" parent="express_sdg_etats" action="express_sdg.ventespos_wizard"/>
+        <menuitem id="express_sdg_etats4" name="Etat des lotsperemption" parent="express_sdg_etats" action="express_sdg.peremption_wizard"/>
+
+    <menuitem id="express_sdg_root" name="Paramétrages" parent="stock.menu_stock_root" groups="stock.group_stock_manager" />
+    <menuitem id="express_sdg_rayon" name="Rayons" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.rayon_action_window"/>
+    <menuitem id="express_sdg_famille" name="Familles" parent="express_sdg_root" groups="stock.group_stock_manager" action="express_sdg.famille_action_window" />
+    <!-- fin MENUS-->
+    
+  </data>
+</odoo>

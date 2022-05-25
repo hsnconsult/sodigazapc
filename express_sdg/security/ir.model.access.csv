@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_express_sdg_famille_superv,express_sdg.famille.superv,model_express_sdg_famille,express_sdg_superv,1,1,1,0
+access_express_sdg_famille_manager,express_sdg.famille.manager,model_express_sdg_famille,express_sdg_manager,1,1,1,1
+access_express_sdg_rayon_superv,express_sdg.rayon.superv,model_express_sdg_rayon,express_sdg_superv,1,1,1,0
+access_express_sdg_rayon_manager,express_sdg.rayon.manager,model_express_sdg_rayon,express_sdg_manager,1,1,1,1
+access_express_sdg_pricechange_manager,express_sdg.pricechange.manager,model_express_sdg_pricechange,express_sdg_manager,1,1,1,1
+access_express_sdg_moyenpaiement,express_sdg.moyenpaiement,model_express_sdg_moyenpaiement,stock.group_stock_manager,1,1,1,1
+access_express_sdg_stocks,express_sdg.stocks,model_express_sdg_stocks,stock.group_stock_manager,1,1,1,1
+access_express_sdg_ventespos,express_sdg.ventespos,model_express_sdg_ventespos,stock.group_stock_manager,1,1,1,1
+access_express_sdg_peremption,express_sdg.peremption,model_express_sdg_peremption,stock.group_stock_manager,1,1,1,1

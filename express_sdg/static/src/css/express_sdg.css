@@ -1,0 +1,42 @@
+/* css moyen paiement*/
+.spaceman{
+  width:100%;
+  font-family: serif;
+  text-align:center;
+  height: 200px;
+  border:2px solid rgba(224, 15, 15, 0.863);
+   }
+  
+.hautpatient{
+    width:100%;
+    font-family: serif;
+    text-align:center;
+    line-height:25px;
+    border:2px solid #000;
+     }
+
+     .tableaupatient{
+        width:100%;
+        border:1px solid #000;
+        margin-bottom: 50px;
+         }
+         .tableaupatient table {font-family: sans-serif;
+      border-collapse: collapse;width: 100%;
+    }
+         .tableaupatient tr td {padding: 3px;
+     border:1px solid black;
+     font-size:14px;
+     text-align:center;
+     white-space: nowrap;
+    }
+    .tableaupatient tr th {padding: 3px;
+    border:1px solid black;
+    text-align:center;
+    font-size:12px;
+    }
+    .tableaupatient .cellr{
+      text-align:right;
+       }
+    .tableaupatient .cellg{
+      text-align:left;
+       }

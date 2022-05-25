@@ -1,0 +1,421 @@
+<odoo>
+    <data>
+<!-- import css -->
+<template id="express_sdgtemplate_id" name="express_sdgtemplate_name" inherit_id="web.report_assets_common">
+  <xpath expr="." position="inside">
+    <link rel="stylesheet" type="text/css" href="/express_sdg/static/src/css/express_sdg.css" />
+  </xpath>
+</template>
+
+<!-- les templates des etats -->
+
+<!-- historique achats/ventes -->
+<template id="report_histoav_template">
+  <t t-call="web.html_container">
+
+    <!-- <t t-call="web.external_layout"> -->
+      <t t-foreach="docs" t-as="produit"><t t-call="web.external_layout">
+        <!-- <t t-call="web.basic_layout"> -->
+        <div class="page">
+          
+            <div class="hautpatient">
+                <h2>HISTORIQUE PRIX <span><t t-esc="produit.name"></t></span> <br/> 
+                  <!-- DU <span><t t-esc="data['debut']" t-options="{'widget': 'date'}"></t></span>
+                  AU <span><t t-esc="data['fin']" t-options="{'widget': 'date'}"></t></span>-->
+                </h2> 
+            </div><br/>
+            <div class="hautpatient">
+                <h2>HISTORIQUE PRIX ACHAT</h2>
+            </div>
+            <div class="tableaupatient">
+                <table class="">
+                    <thead>
+                        <tr>
+                          <th class="">Fournisseur</th>
+                            <th class="">Prix</th>
+                            <th class="">Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="">
+                        <t t-foreach="produit.order_ids" t-as="order">
+                            <tr>
+                              <td class="cellg">
+                                <span t-esc="order.partner_id.name"></span>
+                            </td>
+                              <td class="cellr">
+                                <span t-esc="'{:,.0f}'.format(order.price_unit).replace(',', ' ').replace('.', ',')"/>
+                                            </td>
+                                <td class="cellr">
+                                    <span t-esc="order.date_planned" t-options="{'widget': 'date'}"></span>
+                                </td>
+                                
+                            </tr>
+                        </t>
+                    </tbody>
+
+                </table>
+            </div><br/>
+            <div class="hautpatient">
+              <h2>HISTORIQUE PRIX VENTE</h2>
+          </div>
+          <div class="tableaupatient">
+              <table class="">
+                  <thead>
+                      <tr>
+                          <th class="">Prix</th>
+                          <th class="">Date</th>
+                      </tr>
+                  </thead>
+
+                  <tbody class="">
+                      <t t-foreach="produit.pc_ids" t-as="pc">
+                          <tr>
+                            <td class="cellr">
+                              <span t-esc="'{:,.0f}'.format(pc.track_pvtmp).replace(',', ' ').replace('.', ',')"/>
+                                          </td>
+                              <td class="cellr">
+                                  <span t-esc="pc.datepc" t-options="{'widget': 'date'}"></span>
+                              </td>
+                              
+                          </tr>
+                      </t>
+                  </tbody>
+
+              </table>
+          </div>
+          
+        </div></t>
+      <!-- </t> -->
+    </t>
+
+</t>
+</template>
+
+<!-- moyenpaiement -->
+<template id="report_moyenpaiement_template">
+  <t t-call="web.html_container">
+
+    <t t-call="web.external_layout">
+        <div class="page">
+            <div class="hautpatient">
+                <h2>ENCAISSEMENTS PAR MOYEN DE PAIEMENT <br/> 
+                  DU <span><t t-esc="data['debut']" t-options="{'widget': 'date'}"></t></span>
+                  AU <span><t t-esc="data['fin']" t-options="{'widget': 'date'}"></t></span></h2>
+            </div>
+            <div class="tableaupatient">
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th class="">Moyen De Paiement</th>
+                            <th class="">Montant</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="">
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td class="cellg">
+                                    <span t-esc="doc['moyenpaiement']"></span>
+                                </td>
+                                <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['montant']).replace(',', ' ').replace('.', ',')"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </t>
+
+</t>
+</template>
+
+<!-- peremption -->
+<template id="report_peremption_template">
+  <t t-call="web.html_container">
+    <t t-set="data_report_landscape" t-value="True"/>
+    <t t-call="web.external_layout">
+        <div class="page">
+              
+             
+              <div class="hautpatient">
+                <h2>ETAT DES LOTS DATE DE PEREMPTION 
+                  [<span><t t-esc="data['entrepot_name']"></t></span>]<br/>
+                  [<span t-esc="data['lot_name']"></span>]/[<span t-esc="data['rayon_name']"></span>]
+                  /[<span><t t-esc="data['famille_name']"></t></span>]
+                  /[<span><t t-esc="data['categorie_name']"></t></span>]
+                  /[<span><t t-esc="data['produit_name']"></t></span>]<br/>
+                  DU <span><t t-esc="data['debut']" t-options="{'widget': 'date'}"></t></span>
+                  AU <span><t t-esc="data['fin']" t-options="{'widget': 'date'}"></t></span></h2>
+            </div>
+            <div class="tableaupatient">
+              <table class="">
+                  <thead>
+                      <tr>
+                          <th class="" rowspan="2">Lot</th>
+                          <th class="" rowspan="2">Produit</th>
+                          <th class="" rowspan="2">Rayon</th>
+                          <th class="" rowspan="2">Famille</th>
+                          <th class="" rowspan="2">Catégorie</th>
+                          <th class="" rowspan="2">Stock</th>
+                          <th class="" colspan="2">Magasin</th>
+                          <th class="" rowspan="2">Date Expiration</th>
+                      </tr>
+                      <tr>
+                        <th class="">nom</th>
+                        <th class="">code </th>
+                    </tr>
+                  </thead>
+        
+                  <tbody class="">
+                    <t t-foreach="docs" t-as="doc">
+                      <tr>
+                        <td class="cellg">
+                          <span t-esc="doc['lot_name']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['produit']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['rayon']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['famille']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['categorie']"> </span>
+                        </td>
+                        <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['stockglobal']).replace(',', ' ').replace('.', ',')"/>
+
+                      </td>
+                      <td class="cellg">
+                    <span t-esc="doc['magasin_name']"/>
+
+                    </td>
+                    <td class="cellg">
+                    <span t-esc="doc['complete_name']"/>
+
+                  </td>
+                  <td class="cellr">
+                    <span t-esc="doc['expiration_date']" t-options="{'widget': 'date'}"></span>
+                </td>
+                    </tr>
+                  </t> 
+                </tbody>
+  
+              </table>                
+            
+        </div>
+      </div>
+    </t>
+
+</t>
+</template>
+
+<!-- stocks -->
+<template id="report_stocks_template">
+  <t t-call="web.html_container">
+    <t t-set="data_report_landscape" t-value="True"/>
+    <t t-call="web.external_layout">
+        <div class="page">
+              
+             
+              <div class="hautpatient">
+                <h2>ETAT DES STOCKS DE 
+                  [<span t-esc="data['warehouse']"></span>]/[<span><t t-esc="data['entrepot']"></t></span>]<br/>
+                  [<span t-esc="data['rayon_name']"></span>]/[<span><t t-esc="data['famille_name']"></t></span>]
+                  /[<span><t t-esc="data['categorie_name']"></t></span>]
+                  /[<span><t t-esc="data['produit_name']"></t></span>]<br/>
+                  DU <span><t t-esc="data['debut']" t-options="{'widget': 'date'}"></t></span>
+                  AU <span><t t-esc="data['fin']" t-options="{'widget': 'date'}"></t></span></h2>
+            </div>
+            <div class="tableaupatient">
+              <table class="">
+                  <thead>
+                      <tr>
+                          <th class="" rowspan="2">Référence interne</th>
+                          <th class="" rowspan="2">Lot</th>
+                          <th class="" rowspan="2">Produit</th>
+                          <th class="" rowspan="2">Rayon</th>
+                          <th class="" rowspan="2">Famille</th>
+                          <th class="" rowspan="2">Catégorie</th>
+                          <th class="" rowspan="2">Stock initial</th>
+                          <th class="" colspan="2">Mouvements</th>
+                          <th class="" rowspan="2">Stock final</th>
+                          <th class="" rowspan="2">Stock alerte</th>
+                          <th class="" rowspan="2">Date utilisation optimale</th>
+                          <t t-if="data['ouivoir']">
+                          <th class="" rowspan="2">Pcal</th>  
+                          <th class="" rowspan="2">Valorisation sca</th>
+                          </t>
+                      </tr>
+                      <tr>
+                        <th class="">entrée</th>
+                        <th class="">sortie </th>
+                    </tr>
+                  </thead>
+        
+                  <tbody class="">
+                    <t t-foreach="docs" t-as="doc">
+                      <tr>
+                        <td class="cellg">
+                          <span t-esc="doc['default_code']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['lot_name']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['produit']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['rayon']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['famille']"> </span>
+                        </td>
+                        <td class="cellg">
+                          <span t-esc="doc['categorie']"> </span>
+                        </td>
+                        <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['stockinit']).replace(',', ' ').replace('.', ',')"/>
+
+                      </td>
+                      <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['qte_entree']).replace(',', ' ').replace('.', ',')"/>
+
+                    </td>
+                    <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['qte_sortie']).replace(',', ' ').replace('.', ',')"/>
+
+                  </td>
+                  <td class="cellr">
+                    <span t-esc="'{:,.0f}'.format(doc['stockfinal']).replace(',', ' ').replace('.', ',')"/>
+                </td>
+                <td class="cellr">
+                  <span t-esc="'{:,.0f}'.format(doc['stockmin']).replace(',', ' ').replace('.', ',')"/>
+              </td>
+              <td class="cellr">
+                <span t-esc="doc['dateuse']" t-options="{'widget': 'date'}"></span>
+            </td>
+              <t t-if="data['ouivoir']">
+                <td class="cellr">
+                  <span t-esc="'{:,.0f}'.format(doc['price_unit']).replace(',', ' ').replace('.', ',')"/>
+              </td>
+                <td class="cellr">
+                  <span t-esc="'{:,.0f}'.format(doc['vsca']).replace(',', ' ').replace('.', ',')"/>
+              </td>
+              </t>
+                    </tr>
+                  </t> 
+                </tbody>
+  
+              </table>                
+            
+        </div>
+      </div>
+    </t>
+
+</t>
+</template>
+<!-- ventespos -->
+<template id="report_ventespos_template">
+  <t t-call="web.html_container">
+    <t t-set="data_report_landscape" t-value="True"/>
+
+    <t t-call="web.external_layout">
+        <div class="page">
+            <div class="hautpatient">
+                <h2>ETAT DES VENTES POS
+                  [<span><t t-esc="data['pointdevente_name']"></t></span>] 
+                  /[<span t-esc="data['caissiere_name']"></span>]/[<span><t t-esc="data['caissiere']"></t></span>]<br/>
+                  [<span t-esc="data['rayon_name']"></span>]/[<span><t t-esc="data['famille_name']"></t></span>]
+                  /[<span><t t-esc="data['categorie_name']"></t></span>]
+                  /[<span><t t-esc="data['produit_name']"></t></span>]<br/> 
+                  DU <span><t t-esc="data['debut']" t-options="{'widget': 'date'}"></t></span>
+                  AU <span><t t-esc="data['fin']" t-options="{'widget': 'date'}"></t></span></h2>
+            </div>
+            <div class="tableaupatient">
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th class="">Référence interne</th>
+                            <th class="">Produit</th>
+                            <th class="">Rayon</th>
+                            <th class="">Famille</th>
+                            <th class="">Catégorie</th>
+                            <th class="">Quantité vendue</th>
+                            <th class="">Total Vente HT</th>
+                            <th class="">Montant TVA Vente</th>
+                            <th class="">Total Vente TTC</th>
+                            <th class="">Total Coût Achat HT</th>
+                            <th class="">Montant TVA Achat</th>
+                            <th class="">Total Coût Achat TTC</th>
+                            <th class="">Marge totale</th>
+                            <th class="">Marge unitaire</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="">
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                              <td class="cellg">
+                                <span t-esc="doc['default_code']"></span>
+                            </td>
+                                <td class="cellg">
+                                    <span t-esc="doc['produit']"></span>
+                                </td>
+                                <td class="cellg">
+                                  <span t-esc="doc['rayon']"> </span>
+                                </td>
+                                <td class="cellg">
+                                  <span t-esc="doc['famille']"> </span>
+                                </td>
+                                <td class="cellg">
+                                  <span t-esc="doc['categorie']"> </span>
+                                </td>
+                                <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['qtv']).replace(',', ' ').replace('.', ',')"/>
+                                </td>
+                                <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['tht']).replace(',', ' ').replace('.', ',')"/>
+                              </td>
+                              <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['mtaxe']).replace(',', ' ').replace('.', ',')"/>
+                            </td>
+                            <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['ttc']).replace(',', ' ').replace('.', ',')"/>
+                          </td>
+                          <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['caht']).replace(',', ' ').replace('.', ',')"/>
+                        </td>
+                        <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['mtaxeca']).replace(',', ' ').replace('.', ',')"/>
+                      </td>
+                      <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['catc']).replace(',', ' ').replace('.', ',')"/>
+                    </td>
+                    <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['mgt']).replace(',', ' ').replace('.', ',')"/>
+                  </td>
+                  <td class="cellr">
+                <span t-esc="'{:,.0f}'.format(doc['mgu']).replace(',', ' ').replace('.', ',')"/>
+                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </t>
+
+</t> 
+</template>
+
+    </data>
+</odoo>

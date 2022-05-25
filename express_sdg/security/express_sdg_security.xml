@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data>
+
+    <record id="express_sdg_management" model="ir.module.category">
+        <field name="name">Express_sdg</field>
+        <field name="description">Droits d'accès users pour express_sdg</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="express_sdg_superv" model="res.groups">
+        <field name="name">Superviseur</field>
+        <field name="category_id" ref="express_sdg_management"/>
+    </record>
+    <record id="express_sdg_manager" model="res.groups">
+        <field name="name">Administrateur</field>
+        <field name="category_id" ref="express_sdg_management"/>
+        <field name="implied_ids" eval="[(4, ref('express_sdg_superv'))]"/>
+    </record>
+  
+</data>
+
+</odoo>
