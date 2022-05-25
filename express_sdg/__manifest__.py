@@ -25,8 +25,8 @@
     'data': [
         'security/express_sdg_security.xml',
         'security/ir.model.access.csv',
-        'views/gesparams.xml',
         'views/wizards.xml',
+        'views/gesparams.xml',       
         'views/etatstemplates.xml',
         'views/etats.xml',
     ],
